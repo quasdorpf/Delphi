@@ -2,3 +2,12 @@ build
 cffi
 opencv-python
 numpy
+opencv-contrib-python
+pytesseract
+Pillow
+transformers
+tensorflow
+tf-keras
+gtts
+playsound
+pygobject
