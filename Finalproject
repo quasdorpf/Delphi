@@ -1,0 +1,63 @@
+from PIL import Image
+from transformers import pipeline
+
+import os
+import io
+import tensorflow
+
+import cv2
+
+from gtts import gTTS
+from playsound import playsound 
+
+cam = cv2.VideoCapture(0)
+
+cv2.namedWindow("pic")  # name of pic
+
+pic_counter = 0
+
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        print("failed")
+        break
+    
+    cv2.imshow("pic", frame)
+    pic_name = "pics_{}.png".format(pic_counter)
+    cv2.imwrite(pic_name,frame)
+    pic_counter += 1
+    break
+
+cam.release()
+
+cv2.destroyAllWindows()
+
+class image_captioning:
+    def __init__(self, input_file):
+        self.api_key = "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"
+
+        self.i_file = input_file
+
+        self.img_codebase = pipeline("image-to-text",model="Salesforce/blip-image-captioning-base")
+
+        self.language = "en"
+
+    def change_file(user_input_file):
+        self.i_file = user_input_file
+        
+    def ai_summary(self):
+        output = self.img_codebase(self.i_file)
+        return output[0]['generated_text']
+
+
+input_file = pic_name
+image = image_captioning(input_file)
+max_new_tokens = 25
+print(image.ai_summary())
+text = image.ai_summary()
+
+tts = gTTS(text)
+tts.save("speech.mp3")
+
+playsound('speech.mp3')
+
