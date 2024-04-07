@@ -1,3 +1,7 @@
+# pip install opencv-contrib-python
+# pip install cvlib
+# pip install gtts playsound
+# pip3 install PyObjC
 
 import cv2
 import cvlib as cv
